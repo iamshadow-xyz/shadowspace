@@ -3,7 +3,6 @@ import { auth } from "@/lib/auth"
 import db from "@/db"
 import { posts } from "@/db/schema"
 import { eq } from "drizzle-orm"
-import { users } from "@/db/schema"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -14,19 +13,9 @@ interface User {
     image: string;
 }
 
-interface Post {
-    id: string;
-    title: string;
-    thumbnail: string;
-    content: string;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
 const createPost = async (formData: FormData) => {
     const session = await auth()
-    const user = session?.user as User
+    const user = session?.user as User 
     const title = formData.get("title")
     const thumbnail = formData.get("thumbnail")
     const content = formData.get("content")

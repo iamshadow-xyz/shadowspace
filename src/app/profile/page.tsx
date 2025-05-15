@@ -5,7 +5,6 @@ import PostCard from "@/components/post-card";
 import db from "@/db";
 import { posts } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { users } from "@/db/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

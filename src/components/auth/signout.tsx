@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "../ui/button";
 import SubmitButton from "../utils/submit-button";
 import { LogOut } from "lucide-react";
 import { signOut } from "@/lib/auth";

@@ -22,8 +22,10 @@ interface Post {
 }
 
 export default async function Home() {
-  const session = await auth()
-  const user = session?.user
+  const session = await auth();
+  if (!session) {
+    return null;
+  }
   const allPosts = await db.select().from(posts).innerJoin(users, eq(posts.userId, users.id))
   return (
     <div className="container">
