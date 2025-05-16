@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   Card,
@@ -16,40 +14,42 @@ import SubmitButton from "./utils/submit-button";
 import { Trash2 } from "lucide-react";
 import { deletePost } from "@/app/action";
 
-export default function PostCard({
-  user,
-  post,
-}: {
-  user: {
-    name: string;
-    image: string;
-    id: string;
-    email: string;
-  };
-  post: {
-    id: string;
-    title: string;
-    thumbnail: string;
-    content: string;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-}) {
+interface User {
+  name: string;
+  image: string;
+  id: string;
+  email: string;
+}
+
+interface Post {
+  id: string;
+  title: string;
+  thumbnail: string;
+  content: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export default async function PostCard({post, user}: {post: Post, user: User}) {
   return (
     <div>
       <Card className="w-full bg-neutral-900">
         <CardHeader>
-          <CardTitle>{post.title}</CardTitle>
+          <CardTitle>
+            <Link href={`/post/${post.id}`}>{post.title}</Link>
+          </CardTitle>
         </CardHeader>
         <CardContent>
+          <Link href={`/post/${post.id}`}>
           <Image
-            src={post.thumbnail}
+            src={post.thumbnail as string}
             alt="post image"
             width={500}
             height={500}
             className="rounded-md aspect-video object-cover"
           />
+          </Link>
         </CardContent>
         <CardFooter className="flex justify-between items-center gap-2">
           <div className="flex items-center gap-2">
@@ -62,7 +62,7 @@ export default function PostCard({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {user.id === post.userId ? (
+            {post.userId === user.id ? (
                 <div className="flex items-center gap-2">
                     <Button variant={"outline"} size={"sm"} asChild>
                         <Link href={`/edit/post/${post.id}`}>Edit</Link>

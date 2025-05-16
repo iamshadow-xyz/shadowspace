@@ -24,3 +24,24 @@ export default async function page({ params }: { params: Promise<{ id: string }>
     </div>
   )
 }
+
+export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
+    const { id } = await params
+    const post = await db.select().from(posts).where(eq(posts.id, id)).innerJoin(users, eq(posts.userId, users.id))
+    return {
+      title: post[0].posts.title,
+      description: post[0].posts.content,
+      openGraph: {
+        title: post[0].posts.title,
+        description: post[0].posts.content,
+        images: [
+          {
+            url: post[0].posts.thumbnail,
+            width: 800,
+            height: 600,
+          },
+        ],
+      },
+    }
+  }
+
